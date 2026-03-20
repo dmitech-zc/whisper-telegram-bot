@@ -16,11 +16,10 @@ Choose between **local Whisper** (offline, private) or **Google Gemini** (fast, 
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
 [![Telegram Bot API](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/new?repo=dmitech-zc/whisper-telegram-bot)
 
 <br>
 
-[Quick Start](#-quick-start) · [Configuration](#%EF%B8%8F-configuration) · [Engines](#-engines) · [Deploy to Railway](#-deploy-to-railway)
+[Quick Start](#-quick-start) · [Configuration](#%EF%B8%8F-configuration) · [Engines](#-engines) · [Docker Commands](#-docker-commands)
 
 </div>
 
@@ -51,7 +50,6 @@ Choose between **local Whisper** (offline, private) or **Google Gemini** (fast, 
 
 **Easy Deployment**
 - 🐳 One-command Docker setup
-- 🚀 One-click Railway deploy
 - 🔧 All config via `.env` file
 - 🔄 Auto-restart on failure
 
@@ -160,25 +158,6 @@ Runs [faster-whisper](https://github.com/SYSTRAN/faster-whisper) locally. No dat
 
 ---
 
-## 🚀 Deploy to Railway
-
-The fastest way to get your bot running in the cloud — no server setup needed.
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/new?repo=dmitech-zc/whisper-telegram-bot)
-
-**Steps:**
-
-1. Click the button above
-2. Set environment variables in Railway dashboard:
-   - `BOT_TOKEN` — from [@BotFather](https://t.me/BotFather)
-   - `STT_ENGINE` — `gemini` (recommended for Railway)
-   - `GEMINI_API_KEY` — from [Google AI Studio](https://aistudio.google.com/apikey)
-3. Deploy!
-
-> **Note:** Gemini engine is recommended for Railway since Whisper requires ~1 GB model download and more RAM. If you need Whisper, use a plan with at least 2 GB memory.
-
----
-
 ## 🐳 Docker Commands
 
 ```bash
@@ -200,7 +179,6 @@ whisper-telegram-bot/
 ├── docker-compose.yml   # Service orchestration
 ├── requirements.txt     # Python dependencies
 ├── .env.example         # Environment template
-├── railway.json         # Railway deployment config
 ├── .dockerignore        # Docker build exclusions
 ├── .gitignore           # Git exclusions
 └── LICENSE              # MIT License
