@@ -116,7 +116,7 @@ All settings are defined in the `.env` file:
 |:---|:---|:---|
 | `GEMINI_API_KEY` | — | **Required for Gemini.** [Get your key](https://aistudio.google.com/apikey) |
 | `GEMINI_MODEL` | `gemini-2.0-flash` | Gemini model name |
-| `GEMINI_LANGUAGE` | `Hebrew` | Target transcription language |
+| `GEMINI_LANGUAGE` | `English` | Target transcription language |
 
 ### Whisper Settings
 
@@ -125,7 +125,7 @@ All settings are defined in the `.env` file:
 | `WHISPER_MODEL` | `ivrit-ai/faster-whisper-v2-d4` | Any [faster-whisper](https://github.com/SYSTRAN/faster-whisper) compatible model |
 | `WHISPER_DEVICE` | `cpu` | `cpu` or `cuda` (GPU) |
 | `WHISPER_COMPUTE` | `int8` | Compute type: `int8`, `float16`, `float32` |
-| `WHISPER_LANGUAGE` | `he` | Language code or `auto` for auto-detection |
+| `WHISPER_LANGUAGE` | `auto` | Language code or `auto` for auto-detection |
 | `WHISPER_BEAM_SIZE` | `5` | Beam search size (higher = more accurate, slower) |
 
 ---

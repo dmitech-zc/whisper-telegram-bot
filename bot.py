@@ -45,7 +45,7 @@ class WhisperEngine:
         log.info("Loading Whisper model: %s (%s/%s)", model, device, compute)
         t0 = time.time()
         self.model = WhisperModel(model, device=device, compute_type=compute)
-        lang = os.getenv("WHISPER_LANGUAGE", "he")
+        lang = os.getenv("WHISPER_LANGUAGE", "auto")
         self.language = None if lang == "auto" else lang
         self.beam = int(os.getenv("WHISPER_BEAM_SIZE", "5"))
         log.info("Whisper loaded in %.1fs", time.time() - t0)
@@ -81,7 +81,7 @@ class GeminiEngine:
             sys.exit(1)
         self.client = genai.Client(api_key=key)
         self.model = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-        self.language = os.getenv("GEMINI_LANGUAGE", "Hebrew")
+        self.language = os.getenv("GEMINI_LANGUAGE", "English")
         log.info("Gemini ready: %s (%s)", self.model, self.language)
 
     def transcribe(self, path: str) -> dict:
