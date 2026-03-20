@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    container_name: whisper-telegram-bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - model-cache:/root/.cache/huggingface
+
+volumes:
+  model-cache:
