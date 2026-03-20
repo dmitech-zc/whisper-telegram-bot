@@ -122,7 +122,7 @@ All settings are defined in the `.env` file:
 
 | Variable | Default | Description |
 |:---|:---|:---|
-| `WHISPER_MODEL` | `ivrit-ai/faster-whisper-v2-d4` | Any [faster-whisper](https://github.com/SYSTRAN/faster-whisper) compatible model |
+| `WHISPER_MODEL` | `deepdml/faster-whisper-large-v3-turbo-ct2` | Any [faster-whisper](https://github.com/SYSTRAN/faster-whisper) compatible model |
 | `WHISPER_DEVICE` | `cpu` | `cpu` or `cuda` (GPU) |
 | `WHISPER_COMPUTE` | `int8` | Compute type: `int8`, `float16`, `float32` |
 | `WHISPER_LANGUAGE` | `auto` | Language code or `auto` for auto-detection |

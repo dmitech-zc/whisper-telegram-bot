@@ -39,7 +39,7 @@ class WhisperEngine:
     def __init__(self):
         from faster_whisper import WhisperModel
 
-        model = os.getenv("WHISPER_MODEL", "ivrit-ai/faster-whisper-v2-d4")
+        model = os.getenv("WHISPER_MODEL", "deepdml/faster-whisper-large-v3-turbo-ct2")
         device = os.getenv("WHISPER_DEVICE", "cpu")
         compute = os.getenv("WHISPER_COMPUTE", "int8")
         log.info("Loading Whisper model: %s (%s/%s)", model, device, compute)
