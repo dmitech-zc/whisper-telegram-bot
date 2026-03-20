@@ -179,4 +179,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 [![faster-whisper](https://img.shields.io/badge/faster--whisper-1.1+-green?style=flat-square)](https://github.com/SYSTRAN/faster-whisper)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-2.0_Flash-4285F4?style=flat-square&logo=google)](https://ai.google.dev/)
 
+<br>
+
+Made by [**Dmitry**](https://links.demitrich.od.ua/)
+
 </div>
