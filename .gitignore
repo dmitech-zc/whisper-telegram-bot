@@ -1,24 +1,17 @@
 # Environment
 .env
-venv/
-.venv/
 
 # Python
 __pycache__/
-*.py[cod]
-*.egg-info/
-dist/
-build/
+*.pyc
+*.pyo
+venv/
+.venv/
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Models cache
-models/

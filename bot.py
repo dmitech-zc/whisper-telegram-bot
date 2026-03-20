@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 Whisper / Gemini Telegram Bot
-Transcribe voice messages using Whisper (offline) or Gemini (cloud).
-All configuration via environment variables — see .env.example
+Transcribes voice messages, audio files, and video notes using
+either a local Whisper model or the Gemini API.
+
+All configuration is done via environment variables — see .env.example
 """
 
 import logging
@@ -32,7 +34,7 @@ allowed_users = []
 
 
 class WhisperEngine:
-    """Offline speech-to-text using faster-whisper with VAD filtering."""
+    """Offline speech-to-text engine powered by faster-whisper."""
 
     def __init__(self):
         from faster_whisper import WhisperModel
@@ -68,7 +70,7 @@ class WhisperEngine:
 
 
 class GeminiEngine:
-    """Cloud-based speech-to-text using Google Gemini API."""
+    """Cloud-based speech-to-text engine powered by Google Gemini API."""
 
     def __init__(self):
         from google import genai
@@ -80,10 +82,10 @@ class GeminiEngine:
         self.client = genai.Client(api_key=key)
         self.model = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
         self.language = os.getenv("GEMINI_LANGUAGE", "Hebrew")
-        log.info("Gemini engine ready: %s (language: %s)", self.model, self.language)
+        log.info("Gemini ready: %s (%s)", self.model, self.language)
 
     def transcribe(self, path: str) -> dict:
-        """Send audio to Gemini API and return transcription."""
+        """Send audio to Gemini API and return transcription with metadata."""
         from google.genai import types
 
         t0 = time.time()
@@ -127,7 +129,7 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Process incoming voice/audio/video messages and return transcription."""
+    """Handle incoming voice messages, audio files, and video notes."""
     user = update.effective_user
     if allowed_users and user.id not in allowed_users:
         await update.message.reply_text("Access denied.")
@@ -185,7 +187,7 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    """Initialize the bot, load the STT engine, and start polling."""
+    """Initialize the STT engine and start the Telegram bot."""
     global stt_engine, allowed_users
 
     token = os.getenv("BOT_TOKEN", "")
@@ -212,7 +214,7 @@ def main():
         )
     )
 
-    log.info("Bot started (engine: %s)", engine)
+    log.info("Bot started (%s)", engine)
     app.run_polling(drop_pending_updates=True)
 
 

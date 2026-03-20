@@ -1,6 +1,6 @@
 <div align="center">
 
-<!-- Logo / Header -->
+<!-- Light mode logo -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://img.icons8.com/fluency/96/microphone.png">
   <source media="(prefers-color-scheme: light)" srcset="https://img.icons8.com/fluency/96/microphone.png">
@@ -9,153 +9,184 @@
 
 # Whisper Telegram Bot
 
-**Transcribe voice messages in Telegram using Whisper or Gemini**
+**A Telegram bot that transcribes voice messages, audio files, and video notes into text.**<br>
+Choose between **local Whisper** (offline, private) or **Google Gemini** (fast, free tier).
 
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-[![Telegram Bot API](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
+[![Telegram Bot API](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <br>
 
-[Getting Started](#-getting-started) · [Configuration](#-configuration) · [Engines](#-engines) · [Docker Commands](#-docker-commands) · [Contributing](#-contributing)
-
----
+[Quick Start](#-quick-start) · [Configuration](#%EF%B8%8F-configuration) · [Engines](#-engines) · [Docker Commands](#-docker-commands)
 
 </div>
 
-## Overview
+---
 
-A lightweight, Dockerized Telegram bot that converts voice messages, audio files, video notes, and video messages into text. Choose between two powerful transcription engines depending on your needs:
+## ✨ Features
 
-| | **Gemini** | **Whisper** |
-|:---|:---|:---|
-| **Speed** | Fast (cloud) | Depends on hardware |
-| **Privacy** | Sends audio to Google | Fully offline |
-| **Cost** | Free tier available | Free (self-hosted) |
-| **Languages** | 100+ | 99 languages |
-| **Setup** | API key only | Downloads model (~1 GB) |
+<table>
+<tr>
+<td width="50%">
 
-## Features
+**Dual Engine Support**
+- 🔇 **Whisper** — fully offline, privacy-first
+- ☁️ **Gemini** — cloud-based, blazing fast
 
-- **Dual Engine** — Switch between Gemini (cloud) and Whisper (local) with a single env var
-- **Multi-format** — Voice messages, audio files, video notes, and video messages
-- **Access Control** — Optional whitelist by Telegram user ID
-- **VAD Filtering** — Whisper engine uses Voice Activity Detection for cleaner output
-- **Docker First** — One command to build and run, model cache persisted across restarts
-- **Lightweight** — Single Python file, minimal dependencies
+</td>
+<td width="50%">
 
-## Getting Started
+**Wide Format Support**
+- 🎤 Voice messages
+- 🎵 Audio files (MP3, WAV, FLAC, AAC, M4A)
+- 📹 Video notes & videos
 
-### Prerequisites
+</td>
+</tr>
+<tr>
+<td>
 
-- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
-- A Telegram bot token from [@BotFather](https://t.me/BotFather)
-- *(Optional)* A Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey)
+**Easy Deployment**
+- 🐳 One-command Docker setup
+- 🔧 All config via `.env` file
+- 🔄 Auto-restart on failure
 
-### Quick Start
+</td>
+<td>
+
+**Access Control**
+- 🔒 Optional user whitelist
+- 📊 Per-message transcription stats
+- 📝 Structured logging
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Quick Start
+
+**1. Clone the repository**
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/dmitech/whisper-telegram-bot.git
+git clone https://github.com/YOUR_USERNAME/whisper-telegram-bot.git
 cd whisper-telegram-bot
+```
 
-# 2. Configure environment
+**2. Configure environment**
+
+```bash
 cp .env.example .env
-# Edit .env — set BOT_TOKEN and GEMINI_API_KEY
+```
 
-# 3. Launch
+Edit `.env` and set your credentials:
+
+```env
+BOT_TOKEN=123456:ABC-DEF...    # from @BotFather
+STT_ENGINE=gemini               # or "whisper"
+GEMINI_API_KEY=AIza...          # from https://aistudio.google.com/apikey
+```
+
+**3. Launch**
+
+```bash
 docker compose up -d
 ```
 
-The bot is now running. Send it a voice message in Telegram!
+That's it! Send a voice message to your bot and get the transcription back.
 
-## Configuration
+---
 
-All settings are managed through environment variables in the `.env` file:
+## ⚙️ Configuration
 
-### Core Settings
+All settings are defined in the `.env` file:
 
-| Variable | Description | Default |
+| Variable | Default | Description |
 |:---|:---|:---|
-| `BOT_TOKEN` | Telegram bot token from @BotFather | *required* |
-| `ALLOWED_USERS` | Comma-separated user IDs (empty = allow all) | ` ` |
-| `STT_ENGINE` | Transcription engine: `gemini` or `whisper` | `gemini` |
+| `BOT_TOKEN` | — | **Required.** Telegram bot token from [@BotFather](https://t.me/BotFather) |
+| `ALLOWED_USERS` | *(empty)* | Comma-separated Telegram user IDs. Empty = allow everyone |
+| `STT_ENGINE` | `whisper` | Speech-to-text engine: `gemini` or `whisper` |
 
-### Gemini Engine
+### Gemini Settings
 
-| Variable | Description | Default |
+| Variable | Default | Description |
 |:---|:---|:---|
-| `GEMINI_API_KEY` | API key from Google AI Studio | *required* |
-| `GEMINI_MODEL` | Gemini model to use | `gemini-2.0-flash` |
-| `GEMINI_LANGUAGE` | Target language for transcription | `Hebrew` |
+| `GEMINI_API_KEY` | — | **Required for Gemini.** [Get your key](https://aistudio.google.com/apikey) |
+| `GEMINI_MODEL` | `gemini-2.0-flash` | Gemini model name |
+| `GEMINI_LANGUAGE` | `Hebrew` | Target transcription language |
 
-### Whisper Engine
+### Whisper Settings
 
-| Variable | Description | Default |
+| Variable | Default | Description |
 |:---|:---|:---|
-| `WHISPER_MODEL` | Model name or HuggingFace repo | `ivrit-ai/faster-whisper-v2-d4` |
-| `WHISPER_DEVICE` | Compute device: `cpu` or `cuda` | `cpu` |
-| `WHISPER_COMPUTE` | Precision: `int8`, `float16`, `float32` | `int8` |
-| `WHISPER_LANGUAGE` | Language code or `auto` | `he` |
-| `WHISPER_BEAM_SIZE` | Beam search width | `5` |
+| `WHISPER_MODEL` | `ivrit-ai/faster-whisper-v2-d4` | Any [faster-whisper](https://github.com/SYSTRAN/faster-whisper) compatible model |
+| `WHISPER_DEVICE` | `cpu` | `cpu` or `cuda` (GPU) |
+| `WHISPER_COMPUTE` | `int8` | Compute type: `int8`, `float16`, `float32` |
+| `WHISPER_LANGUAGE` | `he` | Language code or `auto` for auto-detection |
+| `WHISPER_BEAM_SIZE` | `5` | Beam search size (higher = more accurate, slower) |
 
-## Engines
+---
+
+## 🔊 Engines
 
 ### Gemini (Recommended for most users)
 
-Uses Google's Gemini 2.0 Flash model for fast, accurate transcription. The free tier includes 15 requests/minute and 1M tokens/day — more than enough for personal use.
+Uses Google's Gemini API for transcription. Fast, accurate, and free within limits.
 
-```env
-STT_ENGINE=gemini
-GEMINI_API_KEY=AIza...
-```
+| | |
+|:---|:---|
+| **Speed** | ⚡ ~2-5 seconds |
+| **Privacy** | Audio sent to Google servers |
+| **Free Tier** | 15 RPM / 1M tokens per day |
+| **Languages** | 100+ languages |
+| **Setup** | Just an API key |
 
-### Whisper (For privacy-conscious users)
+### Whisper (Privacy-first)
 
-Runs [faster-whisper](https://github.com/SYSTRAN/faster-whisper) locally inside Docker. No data leaves your machine. First startup downloads the model (~1 GB), which is cached in a Docker volume.
+Runs [faster-whisper](https://github.com/SYSTRAN/faster-whisper) locally. No data leaves your server.
 
-```env
-STT_ENGINE=whisper
-WHISPER_MODEL=ivrit-ai/faster-whisper-v2-d4
-```
+| | |
+|:---|:---|
+| **Speed** | 🐢 ~10-30 seconds (CPU) |
+| **Privacy** | ✅ Fully offline |
+| **Cost** | Free forever |
+| **Languages** | 99 languages |
+| **Setup** | Model downloads on first run (~1 GB) |
 
-> **Tip:** For English transcription, use `WHISPER_MODEL=large-v3` and `WHISPER_LANGUAGE=en`.
+---
 
-## Docker Commands
+## 🐳 Docker Commands
 
 ```bash
 docker compose up -d          # Start in background
-docker compose logs -f        # Stream logs
-docker compose restart        # Restart after config changes
+docker compose logs -f        # Follow live logs
+docker compose restart        # Restart after .env changes
 docker compose down           # Stop the bot
 docker compose up -d --build  # Rebuild after code changes
 ```
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 whisper-telegram-bot/
-├── bot.py               # Main bot logic (single file)
-├── Dockerfile            # Container image definition
-├── docker-compose.yml    # Service orchestration
-├── requirements.txt      # Python dependencies
-├── .env.example          # Configuration template
-├── .dockerignore         # Docker build exclusions
-├── .gitignore            # Git exclusions
-└── LICENSE               # MIT License
+├── bot.py               # Main bot logic with Whisper & Gemini engines
+├── Dockerfile           # Container image definition
+├── docker-compose.yml   # Service orchestration
+├── requirements.txt     # Python dependencies
+├── .env.example         # Environment template
+├── .dockerignore        # Docker build exclusions
+├── .gitignore           # Git exclusions
+└── LICENSE              # MIT License
 ```
 
-## Supported Media Types
+---
 
-| Type | Telegram Object | Supported |
-|:---|:---|:---:|
-| Voice message | `voice` | Yes |
-| Audio file | `audio` | Yes |
-| Video note (circle) | `video_note` | Yes |
-| Video | `video` | Yes |
-
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
@@ -165,7 +196,9 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+---
+
+## 📄 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
@@ -173,14 +206,6 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 <div align="center">
 
-**Built with**
-
-[![python-telegram-bot](https://img.shields.io/badge/python--telegram--bot-21.0+-blue?style=flat-square&logo=telegram)](https://github.com/python-telegram-bot/python-telegram-bot)
-[![faster-whisper](https://img.shields.io/badge/faster--whisper-1.1+-green?style=flat-square)](https://github.com/SYSTRAN/faster-whisper)
-[![Google Gemini](https://img.shields.io/badge/Google_Gemini-2.0_Flash-4285F4?style=flat-square&logo=google)](https://ai.google.dev/)
-
-<br>
-
-Made by [**Dmitry**](https://links.demitrich.od.ua/)
+**Built with ❤️ using [python-telegram-bot](https://python-telegram-bot.org/) · [faster-whisper](https://github.com/SYSTRAN/faster-whisper) · [Google Gemini](https://ai.google.dev/)**
 
 </div>
