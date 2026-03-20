@@ -17,6 +17,8 @@ Choose between **local Whisper** (offline, private) or **Google Gemini** (fast, 
 [![Telegram Bot API](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+**Created by [Dmitry](https://links.demitrich.od.ua/)**
+
 <br>
 
 [Quick Start](#-quick-start) · [Configuration](#%EF%B8%8F-configuration) · [Engines](#-engines) · [Docker Commands](#-docker-commands)
